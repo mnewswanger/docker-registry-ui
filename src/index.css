@@ -4,9 +4,8 @@ body {
   font-family: sans-serif;
 }
 
-#content {
-    margin: 20px;
-    padding: 20px;
+#main-content {
+    margin: 10px;
 }
 
 .clear {

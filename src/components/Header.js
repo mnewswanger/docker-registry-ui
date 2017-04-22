@@ -8,7 +8,7 @@ import AppBar from 'material-ui/AppBar';
 const Navigation = () => (
   <AppBar
     title="Docker Images"
-    iconClassNameRight="muidocs-icon-navigation-expand-more"
+    showMenuIconButton={false}
   />
 );
 

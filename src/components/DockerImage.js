@@ -39,12 +39,12 @@ class DockerImage extends React.Component {
     render () {
         var tags = [];
         for (var i = 0; i < this.state.tags.length; i++) {
-            tags.push(<DockerImageTag name={this.state.tags[i]} key={i} />);
+            tags.push(<DockerImageTag name={this.state.tags[i]} key={i} tagURL={this.props.url+':'+this.state.tags[i]} />);
         }
         return <div>
             <div className="docker-registry-image">
                 <h2>{this.props.name}</h2>
-                <RaisedButton label="Image URL" href={this.props.url} style={styles.button} />
+                <RaisedButton label="Image URL" href={this.props.url+':master'} style={styles.button} />
                 <RaisedButton label="Launch Documentation" href={this.props.documentationURL} style={styles.button} />
                 <h3>Tags</h3>
                 {tags}

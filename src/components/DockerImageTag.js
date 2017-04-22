@@ -11,11 +11,12 @@ const styles = {
 
 class DockerImageTag extends React.Component {
     static propTypes = {
-        name: PropTypes.string.isRequired
+        name: PropTypes.string.isRequired,
+        tagURL: PropTypes.string.isRequired
     };
 
     render () {
-        return <RaisedButton style={styles.button} label={this.props.name} />
+        return <RaisedButton label={this.props.name} href={this.props.tagURL} style={styles.button} />
     }
 }
 
