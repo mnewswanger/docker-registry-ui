@@ -17,29 +17,44 @@ import DockerImageList from './components/DockerImageList';
 injectTapEventPlugin();
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            namespaces: {}
+        };
+    }
+
+
     render () {
+        const baseURL = 'https://docker-registry.home.mikenewswanger.com/';
         const dockerRegistryMeta = {"repositories":["base/centos","build-servers/golang","build-servers/web-interface","general/php/7-fpm","general/php/nginx-fpm","generic/mkdocs","generic/php/7-fpm","generic/php/fpm-7","generic/php/fpm-7.1","generic/php/fpm-nginx","generic/php/nginx-fpm","infrastructure/mkdocs","kubernetes/service-router-configurator","nextcloud/nginx","templates/nginx","templates/php/7-fpm","templates/php/base","templates/php/fpm","templates/pip"]};
 
         var namespaces = {};
         for (var i = 0; i < dockerRegistryMeta.repositories.length; i++) {
-            var namespace = dockerRegistryMeta.repositories[i].split('/')[0];
+            var split = dockerRegistryMeta.repositories[i].split('/');
+            var namespace = split[0];
             if (!namespaces[namespace]) {
                 namespaces[namespace] = {
                     name: namespace.replace('-', ' '),
                     images: []
                 };
             }
-            namespaces[namespace].images.push(dockerRegistryMeta.repositories[i].split('/')[0])
+            namespaces[namespace].images.push({
+                name: split.join('/'),
+                url: baseURL + dockerRegistryMeta.repositories[i]
+            })
         }
+        this.state.namespaces = namespaces;
 
         return <MuiThemeProvider>
-    <div>
-        <Header />
-        <Paper id="content">
-            <DockerImageList namespaces={namespaces} />
-        </Paper>
-    </div>
-</MuiThemeProvider>
+                <div>
+                    <Header />
+                    <Paper id="content">
+                        <DockerImageList namespaces={namespaces} />
+                    </Paper>
+                </div>
+            </MuiThemeProvider>
     }
 }
 

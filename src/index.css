@@ -18,8 +18,9 @@ body {
     margin-right: 10px;
 }
 
-.container-content {
-    padding: 0 20px 5px 20px;
+.docker-registry-image {
+    padding: 0 20px;
+    margin-bottom: 30px;
 }
 
 .docker-namespace {

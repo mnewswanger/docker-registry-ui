@@ -13,12 +13,18 @@ class DockerImageNamespace extends React.Component {
     };
 
     render () {
+        var images = [];
+
+        for (var i = 0; i < this.props.images.length; i++) {
+            images.push(<DockerImage name={this.props.images[i].name} key={i} url={this.props.images[i].url} />)
+        }
+
         return <Paper className="docker-namespace">
             <Toolbar>
                 <span className="toolbar-header">{this.props.name}</span>
             </Toolbar>
             <div className="container-content">
-                <DockerImage />
+                {images}
             </div>
         </Paper>
     }
