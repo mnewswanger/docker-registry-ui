@@ -12,18 +12,21 @@ class DockerImageList extends React.Component {
         var namespaces = [];
         var keys = Object.keys(this.props.namespaces)
 
-        for (var i = 0; i < keys.length; i++) {
-            namespaces.push(
-                <DockerImageNamespace
-                    name={this.props.namespaces[keys[i]].name}
-                    images={this.props.namespaces[keys[i]].images}
-                    key={keys[i]}
-                />);
-        }
+        if (keys.length > 0) {
+            for (var i = 0; i < keys.length; i++) {
+                namespaces.push(
+                    <DockerImageNamespace
+                        name={this.props.namespaces[keys[i]].name}
+                        images={this.props.namespaces[keys[i]].images}
+                        key={keys[i]}
+                    />);
+            }
 
-        return <div className="markdown-body">
-                {namespaces}
-            </div>
+            return <div className="markdown-body">
+                    {namespaces}
+                </div>
+        }
+        return <div>Loading...</div>
     }
 }
 
