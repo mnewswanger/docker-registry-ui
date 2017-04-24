@@ -13,12 +13,21 @@ class DockerImageList extends React.Component {
         super(props);
 
         this.state = {
-            namespaces: {}
+            hasFailed: false,
+            namespaces: {},
+            registryURL: this.props.registryURL
         };
     }
 
-    componentDidMount() {
-        axios.get(this.props.registryURL + 'v2/_catalog')
+    updateRegistryImages (ajaxTarget) {
+        if (ajaxTarget === '') {
+            return;
+        }
+        this.setState({
+            hasFailed: false,
+            namespaces: {}
+        });
+        axios.get(ajaxTarget)
             .then(res => {
                 const dockerRegistryMeta = res.data;
                 var namespaces = {};
@@ -33,18 +42,38 @@ class DockerImageList extends React.Component {
                     }
                     namespaces[namespace].images.push({
                         name: split.slice(1).join('/'),
-                        documentationURL: 'https://documentation.docker-registry.home.mikenewswanger.com/images/' + dockerRegistryMeta.repositories[i],
-                        tagsURL: this.props.registryURL + 'v2/' + dockerRegistryMeta.repositories[i] + '/tags/list',
-                        url: this.props.registryURL + dockerRegistryMeta.repositories[i]
+                        documentationURL: this.props.documentationBaseURL + dockerRegistryMeta.repositories[i],
+                        tagsURL: this.state.registryURL + '/v2/' + dockerRegistryMeta.repositories[i] + '/tags/list',
+                        url: this.state.registryURL + dockerRegistryMeta.repositories[i]
                     });
                 }
-                this.setState({namespaces});
-            });
+                this.setState({namespaces: namespaces});
+            })
+            .catch(function (error) {
+                console.log('Failed to load...');
+                this.setState({hasFailed: true});
+            }.bind(this));
+    }
+
+    componentWillReceiveProps (props) {
+        if (props.registryURL !== this.state.registryURL) {
+            this.setState({registryURL: props.registryURL});
+            this.updateRegistryImages(props.registryURL + '/v2/_catalog');
+        }
+    }
+
+    componentDidMount () {
+        if (this.props.registryURL !== '') {
+            this.updateRegistryImages(this.props.registryURL + '/v2/_catalog');
+        }
     }
 
     render () {
+        if (this.state.hasFailed) {
+            return <div>Failed to load from Docker Registry</div>;
+        }
         var namespaces = [];
-        var keys = Object.keys(this.state.namespaces)
+        var keys = Object.keys(this.state.namespaces);
 
         if (keys.length > 0) {
             for (var i = 0; i < keys.length; i++) {
@@ -57,10 +86,11 @@ class DockerImageList extends React.Component {
             }
 
             return <div className="markdown-body">
+                    <h1>{this.state.registryURL}</h1>
                     {namespaces}
-                </div>
+                </div>;
         }
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
 }
 

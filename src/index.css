@@ -4,6 +4,14 @@ body {
   font-family: sans-serif;
 }
 
+#header {
+    margin-bottom: 25px;
+}
+
+#header div.target-url {
+    margin: 10px;
+}
+
 #main-content {
     margin: 10px;
 }

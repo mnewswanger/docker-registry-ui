@@ -30,7 +30,6 @@ class DockerImage extends React.Component {
     componentDidMount() {
         axios.get(this.props.tagsURL)
             .then(res => {
-                console.log(res.data);
                 const tags = res.data.tags.sort();
                 this.setState({tags});
             });
@@ -45,7 +44,7 @@ class DockerImage extends React.Component {
             <div className="docker-registry-image">
                 <h2>{this.props.name}</h2>
                 <RaisedButton label="Image URL" href={this.props.url+':master'} style={styles.button} />
-                <RaisedButton label="Launch Documentation" href={this.props.documentationURL} style={styles.button} />
+                <RaisedButton label="Launch Documentation" href={this.props.documentationURL} style={styles.button} target="_blank" />
                 <h3>Tags</h3>
                 {tags}
                 <div className="clear"></div>
