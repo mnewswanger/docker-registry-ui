@@ -21,19 +21,19 @@ class App extends React.Component {
 
         this.state = {
             documentationBaseURL: 'https://documentation.docker-registry.home.mikenewswanger.com/images/',
-            registryURL: 'https://docker-registry.home.mikenewswanger.com',
+            registryApiUrl: 'https://docker-registry.home.mikenewswanger.com',
             showSearchBar: false
         };
 
-        this.registryURLInput = this.state.registryURL;
+        this.registryApiUrl = this.state.registryApiUrl;
     }
 
     handleInputUpdate(event) {
-        this.registryURLInput = event.target.value;
+        this.registryApiUrl = event.target.value;
     }
 
     loadDockerImages() {
-        this.setState({registryURL: this.registryURLInput});
+        this.setState({registryURL: this.registryApiUrl});
     }
 
     toggleSearchBar() {
@@ -63,7 +63,7 @@ class App extends React.Component {
                         </div>
                     </div>
                     <div id="main-content">
-                        <DockerImageList documentationBaseURL={this.state.documentationBaseURL} registryURL={this.state.registryURL} />
+                        <DockerImageList documentationBaseURL={this.state.documentationBaseURL} registryApiUrl={this.state.registryApiUrl} />
                     </div>
                 </div>
             </MuiThemeProvider>;

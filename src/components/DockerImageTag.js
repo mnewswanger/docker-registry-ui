@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
     button: {
@@ -12,11 +12,11 @@ const styles = {
 class DockerImageTag extends React.Component {
     static propTypes = {
         name: PropTypes.string.isRequired,
-        tagURL: PropTypes.string.isRequired
+        dockerImageWithTag: PropTypes.string.isRequired
     };
 
     render () {
-        return <RaisedButton label={this.props.name} href={this.props.tagURL} style={styles.button} />
+        return <li><FlatButton label={this.props.name} style={styles.button} /> {this.props.dockerImageWithTag}</li>
     }
 }
 

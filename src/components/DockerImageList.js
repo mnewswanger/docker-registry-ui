@@ -4,9 +4,13 @@ import axios from 'axios';
 
 import DockerImageNamespace from './DockerImageNamespace';
 
+function stripProtocol(url) {
+    return url.replace('https://','').replace('http://','');
+}
+
 class DockerImageList extends React.Component {
     static propTypes = {
-        registryURL: PropTypes.string.isRequired
+        registryApiUrl: PropTypes.string.isRequired
     };
 
     constructor(props) {
@@ -15,7 +19,7 @@ class DockerImageList extends React.Component {
         this.state = {
             hasFailed: false,
             namespaces: {},
-            registryURL: this.props.registryURL
+            registryApiUrl: this.props.registryApiUrl
         };
     }
 
@@ -40,14 +44,17 @@ class DockerImageList extends React.Component {
                             images: []
                         };
                     }
+                    // const imageBase = this.state.registryApiUrl.replace('https://').replace('http://');
                     namespaces[namespace].images.push({
                         name: split.slice(1).join('/'),
                         documentationURL: this.props.documentationBaseURL + dockerRegistryMeta.repositories[i],
-                        tagsURL: this.state.registryURL + '/v2/' + dockerRegistryMeta.repositories[i] + '/tags/list',
-                        url: this.state.registryURL + dockerRegistryMeta.repositories[i]
+                        imageTagsApiUrl: this.state.registryApiUrl + '/v2/' + dockerRegistryMeta.repositories[i] + '/tags/list',
+                        registryImagePath: stripProtocol(this.state.registryApiUrl) + '/' + dockerRegistryMeta.repositories[i]
                     });
                 }
-                this.setState({namespaces: namespaces});
+                this.setState({
+                    namespaces: namespaces
+                });
             })
             .catch(function (error) {
                 console.log('Failed to load...');
@@ -56,15 +63,15 @@ class DockerImageList extends React.Component {
     }
 
     componentWillReceiveProps (props) {
-        if (props.registryURL !== this.state.registryURL) {
-            this.setState({registryURL: props.registryURL});
-            this.updateRegistryImages(props.registryURL + '/v2/_catalog');
+        if (props.registryApiUrl !== this.state.registryApiUrl) {
+            this.setState({registryApiUrl: props.registryApiUrl});
+            this.updateRegistryImages(props.registryApiUrl + '/v2/_catalog');
         }
     }
 
     componentDidMount () {
-        if (this.props.registryURL !== '') {
-            this.updateRegistryImages(this.props.registryURL + '/v2/_catalog');
+        if (this.props.registryApiUrl !== '') {
+            this.updateRegistryImages(this.props.registryApiUrl + '/v2/_catalog');
         }
     }
 
@@ -86,7 +93,7 @@ class DockerImageList extends React.Component {
             }
 
             return <div className="markdown-body">
-                    <h1>{this.state.registryURL}</h1>
+                    <h1>{stripProtocol(this.state.registryApiUrl)}</h1>
                     {namespaces}
                 </div>;
         }

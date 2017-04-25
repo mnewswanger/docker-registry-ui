@@ -20,8 +20,8 @@ class DockerImageNamespace extends React.Component {
                     name={this.props.images[i].name}
                     key={i}
                     documentationURL={this.props.images[i].documentationURL}
-                    url={this.props.images[i].url}
-                    tagsURL={this.props.images[i].tagsURL}
+                    registryImagePath={this.props.images[i].registryImagePath}
+                    imageTagsApiUrl={this.props.images[i].imageTagsApiUrl}
                 />)
         }
 

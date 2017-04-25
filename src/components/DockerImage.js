@@ -16,7 +16,8 @@ const styles = {
 class DockerImage extends React.Component {
     static propTypes = {
         name: PropTypes.string.isRequired,
-        tagsURL: PropTypes.string.isRequired
+        registryImagePath: PropTypes.string.isRequired,
+        imageTagsApiUrl: PropTypes.string.isRequired
     };
 
     constructor(props) {
@@ -28,7 +29,7 @@ class DockerImage extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(this.props.tagsURL)
+        axios.get(this.props.imageTagsApiUrl)
             .then(res => {
                 const tags = res.data.tags.sort();
                 this.setState({tags});
@@ -38,15 +39,21 @@ class DockerImage extends React.Component {
     render () {
         var tags = [];
         for (var i = 0; i < this.state.tags.length; i++) {
-            tags.push(<DockerImageTag name={this.state.tags[i]} key={i} tagURL={this.props.url+':'+this.state.tags[i]} />);
+            tags.push(<DockerImageTag
+                    name={this.state.tags[i]}
+                    key={i}
+                    dockerImageWithTag={this.props.registryImagePath+':'+this.state.tags[i]}
+                />);
         }
         return <div>
             <div className="docker-registry-image">
                 <h2>{this.props.name}</h2>
-                <RaisedButton label="Image URL" href={this.props.url+':master'} style={styles.button} />
+                <h3>{this.props.registryImagePath}</h3>
                 <RaisedButton label="Launch Documentation" href={this.props.documentationURL} style={styles.button} target="_blank" />
                 <h3>Tags</h3>
-                {tags}
+                <ul className="tags-list">
+                    {tags}
+                </ul>
                 <div className="clear"></div>
             </div>
             <Divider />
