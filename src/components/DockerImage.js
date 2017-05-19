@@ -48,13 +48,18 @@ class DockerImage extends React.Component {
         return <div>
             <div className="docker-registry-image">
                 <h2>{this.props.name}</h2>
-                <h3>{this.props.registryImagePath}</h3>
-                <RaisedButton label="Launch Documentation" href={this.props.documentationURL} style={styles.button} target="_blank" />
-                <h3>Tags</h3>
-                <ul className="tags-list">
-                    {tags}
-                </ul>
-                <div className="clear"></div>
+                <div style={{width:"49%", float:"left"}}>
+                    <h3>Tags</h3>
+                    <ul className="tags-list">
+                        {tags}
+                    </ul>
+                    <div className="clear"></div>
+                </div>
+                <div style={{width:"49%", float:"right"}}>
+                    <h3>{this.props.registryImagePath}</h3>
+                    <RaisedButton label="Launch Documentation" href={this.props.documentationURL} style={styles.button} target="_blank" />
+                </div>
+                <div style={{clear:"both"}}></div>
             </div>
             <Divider />
         </div>
