@@ -32,8 +32,9 @@ class App extends React.Component {
         this.registryApiUrl = event.target.value;
     }
 
-    loadDockerImages() {
-        this.setState({registryURL: this.registryApiUrl});
+    loadDockerImages(event) {
+        this.setState({registryApiUrl: this.registryApiUrl});
+        event.preventDefault();
     }
 
     toggleSearchBar() {
@@ -49,6 +50,7 @@ class App extends React.Component {
                             onLeftIconButtonTouchTap={this.toggleSearchBar.bind(this)}
                         />
                         <div className="target-url" style={{display: this.state.showSearchBar ? 'block' : 'none' }}>
+                        <form onSubmit={this.loadDockerImages.bind(this)}>
                             <TextField
                                 hintText="https://docker-registry"
                                 floatingLabelText="Docker Registry URL"
@@ -60,6 +62,7 @@ class App extends React.Component {
                                 label="Load"
                                 onTouchTap={this.loadDockerImages.bind(this)}
                             />
+                        </form>
                         </div>
                     </div>
                     <div id="main-content">
