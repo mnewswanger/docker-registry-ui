@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Paper from 'material-ui/Paper';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 import Toolbar from 'material-ui/Toolbar';
 
 import DockerImage from './DockerImage';
@@ -25,14 +25,18 @@ class DockerImageNamespace extends React.Component {
                 />)
         }
 
-        return <Paper className="docker-namespace">
-            <Toolbar>
-                <span className="toolbar-header">{this.props.name}</span>
-            </Toolbar>
-            <div className="container-content">
-                {images}
-            </div>
-        </Paper>
+        return <Card className="docker-namespace">
+            <CardHeader
+                title={this.props.name}
+                actAsExpander={true}
+                showExpandableButton={true}
+                />
+            <CardText expandable={true}>
+                <div className="container-content">
+                    {images}
+                </div>
+            </CardText>
+        </Card>
     }
 }
 

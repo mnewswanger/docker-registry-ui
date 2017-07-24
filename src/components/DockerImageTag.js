@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import copy from 'copy-to-clipboard';
 
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
     button: {
@@ -15,8 +16,19 @@ class DockerImageTag extends React.Component {
         dockerImageWithTag: PropTypes.string.isRequired
     };
 
-    render () {
-        return <li><FlatButton label={this.props.name} style={styles.button} /> {this.props.dockerImageWithTag}</li>
+    copyToClipboard = () => {
+        copy(this.props.dockerImageWithTag);
+    }
+
+
+    render = () => {
+        return <RaisedButton
+            label={this.props.name}
+            primary={this.props.name === "master"}
+            secondary={this.props.name === "develop"}
+            style={styles.button}
+            onTouchTap={this.copyToClipboard}
+            />
     }
 }
 

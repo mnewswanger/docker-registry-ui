@@ -47,7 +47,7 @@ class DockerImageList extends React.Component {
                     // const imageBase = this.state.registryApiUrl.replace('https://').replace('http://');
                     namespaces[namespace].images.push({
                         name: split.slice(1).join('/'),
-                        documentationURL: this.props.documentationBaseURL + dockerRegistryMeta.repositories[i],
+                        documentationURL: this.props.documentationBaseURL ? this.props.documentationBaseURL + dockerRegistryMeta.repositories[i] : null,
                         imageTagsApiUrl: this.state.registryApiUrl + '/v2/' + dockerRegistryMeta.repositories[i] + '/tags/list',
                         registryImagePath: stripProtocol(this.state.registryApiUrl) + '/' + dockerRegistryMeta.repositories[i]
                     });

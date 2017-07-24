@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -45,24 +46,22 @@ class DockerImage extends React.Component {
                     dockerImageWithTag={this.props.registryImagePath+':'+this.state.tags[i]}
                 />);
         }
-        return <div>
-            <div className="docker-registry-image">
-                <h2>{this.props.name}</h2>
-                <div style={{width:"49%", float:"left"}}>
-                    <h3>Tags</h3>
-                    <ul className="tags-list">
-                        {tags}
-                    </ul>
-                    <div className="clear"></div>
-                </div>
-                <div style={{width:"49%", float:"right"}}>
-                    <h3>{this.props.registryImagePath}</h3>
-                    <RaisedButton label="Launch Documentation" href={this.props.documentationURL} style={styles.button} target="_blank" />
-                </div>
-                <div style={{clear:"both"}}></div>
-            </div>
-            <Divider />
-        </div>
+        var launchDocumentationButton = null
+        if (this.props.documentationURL) {
+            launchDocumentationButton = <RaisedButton label="Launch Documentation" href={this.props.documentationURL} style={styles.button} target="_blank" />
+        }
+        return <Card>
+                <CardHeader
+                    title={this.props.name}
+                    actAsExpander={true}
+                    showExpandableButton={true}
+                    />
+                <CardText expandable={true}>
+                    {tags}
+                    <br />
+                    {launchDocumentationButton}
+                </CardText>
+        </Card>
     }
 }
 

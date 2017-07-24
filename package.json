@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.16.1",
+    "copy-to-clipboard": "^3.0.6",
     "material-ui": "^0.17.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
