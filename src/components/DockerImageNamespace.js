@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Card, CardHeader, CardText} from 'material-ui/Card';
-import Toolbar from 'material-ui/Toolbar';
 
 import DockerImage from './DockerImage';
 

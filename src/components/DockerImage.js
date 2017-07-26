@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import {Card, CardHeader, CardText} from 'material-ui/Card';
-import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import DockerImageTag from './DockerImageTag';
