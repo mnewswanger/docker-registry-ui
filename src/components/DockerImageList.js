@@ -22,20 +22,22 @@ class DockerImageList extends React.Component {
         };
     }
 
-    updateRegistryImages (ajaxTarget) {
-        if (ajaxTarget === '') {
+    updateRegistryImages (apiEndpoint, append = false) {
+        if (!apiEndpoint) {
             return;
         }
+
         this.setState({
-            hasFailed: false,
-            namespaces: {}
+            hasFailed: false
         });
-        axios.get(ajaxTarget)
+
+        axios.get(apiEndpoint)
             .then(res => {
                 const dockerRegistryMeta = res.data;
-                var namespaces = {};
-                for (var i = 0; i < dockerRegistryMeta.repositories.length; i++) {
-                    var split = dockerRegistryMeta.repositories[i].split('/');
+                var namespaces = append ? this.state.namespaces : {};
+
+                dockerRegistryMeta.repositories.forEach(item => {
+                    var split = item.split('/');
                     var namespace = split[0];
                     if (!namespaces[namespace]) {
                         namespaces[namespace] = {
@@ -43,21 +45,29 @@ class DockerImageList extends React.Component {
                             images: []
                         };
                     }
-                    // const imageBase = this.state.registryApiUrl.replace('https://').replace('http://');
+
                     namespaces[namespace].images.push({
                         name: split.slice(1).join('/'),
-                        documentationURL: this.props.documentationBaseURL ? this.props.documentationBaseURL + dockerRegistryMeta.repositories[i] : null,
-                        imageTagsApiUrl: this.state.registryApiUrl + '/v2/' + dockerRegistryMeta.repositories[i] + '/tags/list',
-                        registryImagePath: stripProtocol(this.state.registryApiUrl) + '/' + dockerRegistryMeta.repositories[i]
+                        documentationURL: this.props.documentationBaseURL ? this.props.documentationBaseURL + item : null,
+                        imageTagsApiUrl: this.state.registryApiUrl + '/v2/' + item + '/tags/list',
+                        registryImagePath: stripProtocol(this.state.registryApiUrl) + '/' + item
                     });
-                }
+                });
+
                 this.setState({
                     namespaces: namespaces
                 });
+
+                if (res.headers.link) {
+                    var nextLink = res.headers.link.match(/<(.+)>;/)[1];
+                    this.updateRegistryImages(this.state.registryApiUrl + nextLink, true);
+                }
             })
             .catch(function (error) {
                 console.log('Failed to load...');
-                this.setState({hasFailed: true});
+                this.setState({
+                    hasFailed: true
+                });
             }.bind(this));
     }
 
