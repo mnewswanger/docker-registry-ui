@@ -176,31 +176,7 @@ body {
   margin-bottom: 15px;
   line-height: 1.1;
 }
-/*
-.markdown-body h1 {
-  font-size: 30px;
-}
 
-.markdown-body h2 {
-  font-size: 21px;
-}
-
-.markdown-body h3 {
-  font-size: 16px;
-}
-
-.markdown-body h4 {
-  font-size: 14px;
-}
-
-.markdown-body h5 {
-  font-size: 12px;
-}
-
-.markdown-body h6 {
-  font-size: 11px;
-}
-*/
 .markdown-body blockquote {
   margin: 0;
 }
