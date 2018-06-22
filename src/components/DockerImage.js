@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-
 import DockerImageTag from './DockerImageTag';
 
 const styles = {
@@ -39,28 +37,32 @@ class DockerImage extends React.Component {
     render () {
         var tags = [];
         for (var i = 0; i < this.state.tags.length; i++) {
-            tags.push(<DockerImageTag
+            tags.push(
+                <DockerImageTag
                     name={this.state.tags[i]}
                     key={i}
                     dockerImageWithTag={this.props.registryImagePath+':'+this.state.tags[i]}
-                />);
+                />
+            );
         }
+
         var launchDocumentationButton = null
         if (this.props.documentationURL) {
             launchDocumentationButton = <RaisedButton label="Launch Documentation" href={this.props.documentationURL} style={styles.button} target="_blank" />
         }
+
         return <Card>
-                <CardHeader
-                    title={this.props.name}
-                    actAsExpander={true}
-                    showExpandableButton={true}
-                    />
-                <CardText expandable={true}>
-                    {tags}
-                    <br />
-                    {launchDocumentationButton}
-                </CardText>
-        </Card>
+            <CardHeader
+                title={this.props.name}
+                actAsExpander={true}
+                showExpandableButton={true}
+            />
+            <CardText expandable={true}>
+                {tags}
+                <br />
+                {launchDocumentationButton}
+            </CardText>
+        </Card>;
     }
 }
 

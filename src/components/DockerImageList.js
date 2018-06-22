@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
 import DockerImageNamespace from './DockerImageNamespace';
 
 function stripProtocol(url) {
@@ -79,6 +78,7 @@ class DockerImageList extends React.Component {
         if (this.state.hasFailed) {
             return <div>Failed to load from Docker Registry</div>;
         }
+
         var namespaces = [];
         var keys = Object.keys(this.state.namespaces);
 
@@ -89,14 +89,16 @@ class DockerImageList extends React.Component {
                         name={this.state.namespaces[keys[i]].name}
                         images={this.state.namespaces[keys[i]].images}
                         key={keys[i]}
-                    />);
+                    />
+                );
             }
 
             return <div className="markdown-body">
-                    <h1>{stripProtocol(this.state.registryApiUrl)}</h1>
-                    {namespaces}
-                </div>;
+                <h1>{stripProtocol(this.state.registryApiUrl)}</h1>
+                {namespaces}
+            </div>;
         }
+
         return <div>Loading...</div>;
     }
 }

@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './index.css';
-
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-
 import DockerImageList from './components/DockerImageList';
 
 // Needed for onTouchTap
@@ -43,13 +40,13 @@ class App extends React.Component {
 
     render () {
         return <MuiThemeProvider>
-                <div>
-                    <div id="header">
-                        <AppBar
-                            title="Docker Images"
-                            onLeftIconButtonTouchTap={this.toggleSearchBar.bind(this)}
-                        />
-                        <div className="target-url" style={{display: this.state.showSearchBar ? 'block' : 'none' }}>
+            <div>
+                <div id="header">
+                    <AppBar
+                        title="Docker Images"
+                        onLeftIconButtonTouchTap={this.toggleSearchBar.bind(this)}
+                    />
+                    <div className="target-url" style={{display: this.state.showSearchBar ? 'block' : 'none' }}>
                         <form onSubmit={this.loadDockerImages.bind(this)}>
                             <TextField
                                 hintText="https://docker-registry"
@@ -63,17 +60,17 @@ class App extends React.Component {
                                 onTouchTap={this.loadDockerImages.bind(this)}
                             />
                         </form>
-                        </div>
-                    </div>
-                    <div id="main-content">
-                        <DockerImageList documentationBaseURL={this.state.documentationBaseURL} registryApiUrl={this.state.registryApiUrl} />
                     </div>
                 </div>
-            </MuiThemeProvider>;
+                <div id="main-content">
+                    <DockerImageList documentationBaseURL={this.state.documentationBaseURL} registryApiUrl={this.state.registryApiUrl} />
+                </div>
+            </div>
+        </MuiThemeProvider>;
     }
 }
 
 ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+    <App />,
+    document.getElementById('root')
 );
