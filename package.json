@@ -4,17 +4,17 @@
   "private": true,
   "dependencies": {
     "axios": "^0.16.1",
-    "copy-to-clipboard": "^3.0.6",
+    "copy-to-clipboard": "^3.0.8",
     "material-ui": "^0.17.4",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-redux": "^5.0.4",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
+    "react-redux": "^5.0.7",
     "react-tap-event-plugin": "^2.0.1",
-    "redux": "^3.6.0"
+    "redux": "^3.7.2"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5",
-    "redux-devtools": "^3.3.2"
+    "react-scripts": "^1.1.4",
+    "redux-devtools": "^3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
