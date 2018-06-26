@@ -4,7 +4,7 @@ This project provides a single-page [react](https://facebook.github.io/react/) a
 
 ## Quick Start ##
 
-Update the default registry and documentation path (if any) to your registry defaults (or blank if no default should be specified).  Then simply run `npm install && npm start` from the checkout directory.  For production builds, use `npm build` to generate a deployable artifact.
+Copy **.env.example** file to **.env**. Update the urls to point to your docker registry and documentation path (if any).  Then simply run `npm install && npm start` from the checkout directory.  For production builds, use `npm build` to generate a deployable artifact.
 
 ## Documentation Links ##
 
