@@ -17,6 +17,8 @@ class App extends React.Component {
         super(props);
 
         this.state = {
+            documentationBaseURL: process.env.REACT_APP_DOCUMENTATIONURL,
+            registryApiUrl: process.env.REACT_APP_APIURL,
             showSearchBar: false
         };
 
@@ -61,7 +63,7 @@ class App extends React.Component {
                     </div>
                 </div>
                 <div id="main-content">
-                    <DockerImageList documentationBaseURL={process.env.REACT_APP_DOCUMENTATIONURL} registryApiUrl={process.env.REACT_APP_APIURL} />
+                    <DockerImageList documentationBaseURL={this.state.documentationBaseURL} registryApiUrl={this.state.registryApiUrl} />
                 </div>
             </div>
         </MuiThemeProvider>;
