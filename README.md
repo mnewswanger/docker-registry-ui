@@ -9,3 +9,13 @@ Copy **.env.example** file to **.env**. Update the urls to point to your docker 
 ## Documentation Links ##
 
 When providing a documentation base url, the registry UI will build links to documentation by appending the full image name (without tags) to the user as a link.  The documentation endpoint should support URIs in the format of <baseURL>/namespace/image-name.
+
+## Docker Container ##
+
+### Building ###
+
+Ensure your .env file contents look correct.  Then run `docker build -t docker-registry-ui:latest .`
+
+### Running ###
+
+`docker run -p 8080:80 docker-registry-ui`
