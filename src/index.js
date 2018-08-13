@@ -16,9 +16,28 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
+        var urlAPI, urlDocs;
+        try {
+            // validate url and force trailing slash
+            urlAPI = new URL(process.env.REACT_APP_APIURL).toString();
+            if (!urlAPI.endsWith('/')) {
+                urlAPI += '/';
+            }
+        } catch (e) {
+            console.warn('Invalid REACT_APP_APIURL passed:', process.env.REACT_APP_APIURL);
+        }
+        try {
+            // validate url and force trailing slash
+            urlDocs = new URL(process.env.REACT_APP_DOCUMENTATIONURL).toString();
+            if (!urlDocs.endsWith('/')) {
+                urlDocs += '/';
+            }
+        } catch (e) {}
+
         this.state = {
-            documentationBaseURL: process.env.REACT_APP_DOCUMENTATIONURL,
-            registryApiUrl: process.env.REACT_APP_APIURL,
+            documentationBaseURL: urlDocs,
+            error: '',
+            registryApiUrl: urlAPI,
             showSearchBar: false
         };
 
@@ -30,6 +49,22 @@ class App extends React.Component {
     }
 
     loadDockerImages(event) {
+        this.setState({
+            error: ''
+        });
+
+        try {
+            // validate url and force trailing slash
+            this.registryApiUrl = new URL(this.registryApiUrl).toString();
+            if (!this.registryApiUrl.endsWith('/')) {
+                this.registryApiUrl += '/';
+            }
+        } catch (e) {
+            this.setState({
+                error: 'Invalid Docker Registry URL supplied'
+            });
+        }
+
         this.setState({registryApiUrl: this.registryApiUrl});
         event.preventDefault();
     }
@@ -63,7 +98,7 @@ class App extends React.Component {
                     </div>
                 </div>
                 <div id="main-content">
-                    <DockerImageList documentationBaseURL={this.state.documentationBaseURL} registryApiUrl={this.state.registryApiUrl} />
+                    { this.state.error ? <p>{this.state.error}</p> : <DockerImageList documentationBaseURL={this.state.documentationBaseURL} registryApiUrl={this.state.registryApiUrl} /> }
                 </div>
             </div>
         </MuiThemeProvider>;

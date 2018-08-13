@@ -49,8 +49,8 @@ class DockerImageList extends React.Component {
                     namespaces[namespace].images.push({
                         name: split.slice(1).join('/'),
                         documentationURL: this.props.documentationBaseURL ? this.props.documentationBaseURL + item : null,
-                        imageTagsApiUrl: this.state.registryApiUrl + '/v2/' + item + '/tags/list',
-                        registryImagePath: stripProtocol(this.state.registryApiUrl) + '/' + item
+                        imageTagsApiUrl: this.state.registryApiUrl + 'v2/' + item + '/tags/list',
+                        registryImagePath: stripProtocol(this.state.registryApiUrl) + item
                     });
                 });
 
@@ -74,13 +74,13 @@ class DockerImageList extends React.Component {
     componentWillReceiveProps (props) {
         if (props.registryApiUrl !== this.state.registryApiUrl) {
             this.setState({registryApiUrl: props.registryApiUrl});
-            this.updateRegistryImages(props.registryApiUrl + '/v2/_catalog');
+            this.updateRegistryImages(props.registryApiUrl + 'v2/_catalog');
         }
     }
 
     componentDidMount () {
         if (this.props.registryApiUrl !== '') {
-            this.updateRegistryImages(this.props.registryApiUrl + '/v2/_catalog');
+            this.updateRegistryImages(this.props.registryApiUrl + 'v2/_catalog');
         }
     }
 
